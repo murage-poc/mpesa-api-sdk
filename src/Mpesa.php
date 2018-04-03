@@ -70,6 +70,48 @@ class Mpesa
     }
 
     /**
+     * Use this function to register validation and confirmation url
+     * @param $shortCode | the shortcode for the predefined urls
+     * @param $responseType | the type of response e.g. Completed
+     * @param $confirmationUrl | the confirmation url
+     * @param $validationUrl | the validation url
+     * @return string
+     */
+    public function registerUrl($shortCode,$responseType,$confirmationUrl,$validationUrl)
+    {
+        $live=env("application_status");
+
+        if( $live =="live"){
+            $url = 'https://api.safaricom.co.ke/mpesa/c2b/v1/registerurl';
+            $token=self::generateLiveToken();
+        }elseif ($live=="sandbox"){
+            $url = 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl';
+            $token=self::generateSandBoxToken();
+        }else{
+            return json_encode(["Message"=>"invalid application status"]);
+        }
+
+        $curl = curl_init();
+
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Authorization:Bearer '.$token));
+
+        $curl_post_data = array(
+            //Fill in the request parameters with valid values
+            'ShortCode' => $shortCode,
+            'ResponseType' => $responseType,
+            'ConfirmationURL' => $confirmationUrl,
+            'ValidationURL' => $validationUrl
+        );
+        $data_string = json_encode($curl_post_data);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        $curl_response = curl_exec($curl);
+        return json_decode($curl_response);
+    }
+    /**
      * Use this function to initiate a reversal request
      * @param $CommandID | Takes only 'TransactionReversal' Command id
      * @param $Initiator | The name of Initiator to initiating  the request
