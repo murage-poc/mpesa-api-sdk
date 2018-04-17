@@ -3,11 +3,10 @@
   "description": "A PHP package for Mpesa API",
   "type": "package",
  "minimum-stability": "stable",
-  "version":"0.0.1-rc",
+  "version":"0.0.1",
  
 "require": {
-    "php": ">=5.3.0",
-    "vlucas/phpdotenv": "^2.5@dev"
+    "php": ">=5.3.0"
   },
   "license": "mit",
   "authors": [
