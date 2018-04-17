@@ -1,5 +1,5 @@
 {
-  "name": "safaricom/mpesa",
+  "name": "murage/mpesa",
   "description": "A PHP package for Mpesa API",
   "type": "package",
  "minimum-stability": "dev", 
@@ -13,12 +13,15 @@
     {
       "name": "Moses Nandwa",
       "email": "mnandwa@safaricom.co.ke"
+    },{
+      "name": "Murage M",
+      "email": "murage@mimidots.com"
     }
   ],
  
   "autoload": {
-    "psr-4": {
-      "Safaricom\\Mpesa\\": "src/"
-    }
+    "classmap":[
+      "./"
+    ]
   }
 }
