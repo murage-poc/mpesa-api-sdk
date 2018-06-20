@@ -20,8 +20,8 @@ class Mpesa
      * @return mixed
      */
     public static function generateLiveToken(){
-        $consumer_key=env("consumer_key");
-        $consumer_secret=env("consumer_secret");
+        $consumer_key=env("MPESA_CONSUMER_KEY");
+        $consumer_secret=env("MPESA_SECRET_KEY");
 
         if(!isset($consumer_key)||!isset($consumer_secret)){
             die("please declare the consumer key and consumer secret as defined in the documentation");
@@ -49,8 +49,8 @@ class Mpesa
      * @return mixed
      */
     public static function generateSandBoxToken(){
-        $consumer_key= env("consumer_key");
-        $consumer_secret= env("consumer_secret");
+        $consumer_key= env("MPESA_CONSUMER_KEY");
+        $consumer_secret= env("MPESA_SECRET_KEY");
         if(!isset($consumer_key)||!isset($consumer_secret)){
             die("please declare the consumer key and consumer secret as defined in the documentation");
         }
@@ -79,7 +79,7 @@ class Mpesa
      */
     public function registerUrl($shortCode,$responseType,$confirmationUrl,$validationUrl)
     {
-        $live=env("application_status");
+        $live=env("APP_ENV");
 
         if( $live =="live"){
             $url = 'https://api.safaricom.co.ke/mpesa/c2b/v1/registerurl';
@@ -127,7 +127,7 @@ class Mpesa
      * @return mixed|string
      */
     public static function reversal($CommandID, $Initiator, $SecurityCredential, $TransactionID, $Amount, $ReceiverParty, $RecieverIdentifierType, $ResultURL, $QueueTimeOutURL, $Remarks, $Occasion){
-        $live=env("application_status");
+        $live=env("APP_ENV");
 
         if( $live =="live"){
             $url = 'https://api.safaricom.co.ke/mpesa/reversal/v1/request';
@@ -185,7 +185,7 @@ class Mpesa
      * @return string
      */
     public static function b2c($InitiatorName, $SecurityCredential, $CommandID, $Amount, $PartyA, $PartyB, $Remarks, $QueueTimeOutURL, $ResultURL, $Occasion){
-        $live=env("application_status");
+        $live=env("APP_ENV");
 
         if( $live =="live"){
             $url = 'https://api.safaricom.co.ke/mpesa/b2c/v1/paymentrequest';
@@ -237,7 +237,7 @@ class Mpesa
      * @return mixed|string
      */
     public  static  function  c2b($ShortCode, $CommandID, $Amount, $Msisdn, $BillRefNumber ){
-        $live=env("application_status");
+        $live=env("APP_ENV");
 
         if( $live =="live"){
             $url = 'https://api.safaricom.co.ke/mpesa/c2b/v1/simulate';
@@ -288,7 +288,7 @@ class Mpesa
      * @return mixed|string
      */
     public static function accountBalance($CommandID, $Initiator, $SecurityCredential, $PartyA, $IdentifierType, $Remarks, $QueueTimeOutURL, $ResultURL){
-        $live=env("application_status");
+        $live=env("APP_ENV");
 
 
         if( $live =="live"){
@@ -343,7 +343,7 @@ class Mpesa
      * @return mixed|string
      */
     public function transactionStatus($Initiator, $SecurityCredential, $CommandID, $TransactionID, $PartyA, $IdentifierType, $ResultURL, $QueueTimeOutURL, $Remarks, $Occasion){
-        $live=env("application_status");
+        $live=env("APP_ENV");
 
         if( $live =="live"){
             $url = 'https://api.safaricom.co.ke/mpesa/transactionstatus/v1/query';
@@ -404,7 +404,7 @@ class Mpesa
      * @return mixed|string
      */
     public function b2b($Initiator, $SecurityCredential, $Amount, $PartyA, $PartyB, $Remarks, $QueueTimeOutURL, $ResultURL, $AccountReference, $commandID, $SenderIdentifierType, $RecieverIdentifierType){
-        $live=env("application_status");
+        $live=env("APP_ENV");
 
         if( $live =="live"){
             $url = 'https://api.safaricom.co.ke/mpesa/b2b/v1/paymentrequest';
@@ -457,7 +457,7 @@ class Mpesa
      * @return mixed|string
      */
     public function STKPushSimulation($BusinessShortCode, $LipaNaMpesaPasskey, $TransactionType, $Amount, $PartyA, $PartyB, $PhoneNumber, $CallBackURL, $AccountReference, $TransactionDesc, $Remark){
-        $live=env("application_status");
+        $live=env("APP_ENV");
         if( $live =="live"){
             $url = 'https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
             $token=self::generateLiveToken();
@@ -515,7 +515,7 @@ class Mpesa
      * @return mixed|string
      */
     public static function STKPushQuery($checkoutRequestID, $businessShortCode, $password, $timestamp){
-        $live=env("application_status");
+        $live=env("APP_ENV");
 
         if( $live =="live"){
             $url = 'https://api.safaricom.co.ke/mpesa/stkpushquery/v1/query';
